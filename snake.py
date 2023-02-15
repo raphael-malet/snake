@@ -1,5 +1,6 @@
 import pygame
 import random
+import sys
 
 menu = True
 
@@ -13,13 +14,11 @@ violet = (108, 2, 119)
 
 snake_largeur = 10
 
-
-
 #variable taille fenetre
 largeur_fenetre = 500
 hauteur_fenetre = 400
 
-#variable deplacement
+#variable changement de direction
 horizontal_changement = 0
 vertical_changement = 0
 
@@ -30,6 +29,8 @@ vertical_historique = 0
 temps = pygame.time.Clock()
 vitesse = 15
 
+#variable de la fonte du score
+score_style_font = pygame.font.SysFont('Arial', 20)
 
 #création de la fenetre de jeu
 pygame.init()
@@ -39,9 +40,7 @@ pygame.display.update()
 #nom de la fenetre de jeu
 pygame.display.set_caption('Snake')
 
-
-score_style_font = pygame.font.SysFont(None, 30)
-
+#fonction pour mettre le meilleur score dans le fichier score
 def meilleur_score(score):
     fichier = open('score.txt', 'r')
     personal_best = int(fichier.read())
@@ -52,16 +51,19 @@ def meilleur_score(score):
     fichier.write(str(personal_best))
     fichier.close()
 
+#fonction pour prendre le score dans le fichier score
 def affichage_meilleur_score():
     fichier = open('score.txt', 'r')
     score = fichier.read()
     fichier.close()
     return score
 
+#focntion position du snake quand il grandit
 def snake(snake_liste):
     for x in snake_liste:
         pygame.draw.rect(fenetre, violet, [x[0], x[1], snake_largeur, snake_largeur])
 
+#fonction afficher socre et meilleur score sur la fenetre de jeu
 def score_actuelle(score):
     score_affichage = score_style_font.render('score: '+ str(score), True, noir)
     fenetre.blit(score_affichage, [0,1])
@@ -69,6 +71,7 @@ def score_actuelle(score):
     meilleur_score(score)
     pb_affichage = score_style_font.render('pb: ' + affichage_meilleur_score(), True, noir)
     fenetre.blit(pb_affichage, [420, 1])
+
 
 #fonction affichage message
 def message(msg, couleur, x, y, taille_police):
@@ -78,7 +81,6 @@ def message(msg, couleur, x, y, taille_police):
     mess = font_style.render(msg, True, couleur)
     #postion du message sur la fenetre de jeu
     fenetre.blit(mess, [x, y])
-
 
 
 #foncion boucle de jeu
@@ -118,6 +120,10 @@ def bouclejeu():
             pygame.display.update()
 
             for evenement in pygame.event.get():
+                # condition pour femrer la fenetre avec le bouton fermer
+                if evenement.type== pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
                 if evenement.type == pygame.KEYDOWN:
                     if evenement.key == pygame.K_q:
                         menu = False
@@ -139,6 +145,10 @@ def bouclejeu():
             pygame.display.update()
 
             for evenement in pygame.event.get():
+                # condition pour femrer la fenetre avec le bouton fermer
+                if evenement.type== pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
                 if evenement.type == pygame.KEYDOWN:
                     if evenement.key == pygame.K_q:
                         jeu_ferme = True
@@ -151,6 +161,10 @@ def bouclejeu():
 
         #boucle jeu en cours
         for evenement in pygame.event.get():
+            #condition pour femrer la fenetre avec le bouton fermer
+            if evenement.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
             if evenement.type == pygame.QUIT:
                 perdu = True
             if evenement.type == pygame.KEYDOWN:
@@ -236,4 +250,3 @@ def bouclejeu():
     quit()
 
 bouclejeu()
-
