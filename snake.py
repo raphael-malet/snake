@@ -5,7 +5,6 @@ import sys
 menu = True
 
 #variable couleur
-bleu = (0, 0, 255)
 noir = (0, 0, 0)
 blanc = (255, 255, 255)
 rouge = (222, 41, 22)
@@ -29,8 +28,8 @@ vertical_historique = 0
 temps = pygame.time.Clock()
 vitesse = 15
 
-#variable de la fonte du score
-score_style_font = pygame.font.SysFont('Arial', 20)
+
+
 
 #création de la fenetre de jeu
 pygame.init()
@@ -39,6 +38,9 @@ fenetre = pygame.display.set_mode((largeur_fenetre, hauteur_fenetre))
 pygame.display.update()
 #nom de la fenetre de jeu
 pygame.display.set_caption('Snake')
+
+#variable de la fonte du score
+score_style_font = pygame.font.SysFont('arial', 20)
 
 #fonction pour mettre le meilleur score dans le fichier score
 def meilleur_score(score):
